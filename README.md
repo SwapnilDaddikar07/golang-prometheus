@@ -3,12 +3,12 @@
 This is a simple integration with official prometheus golang client library to expose metrics.
 Four endpoints are configred.
 
-1. /all-success-simulator  (needs monitoring)
-2. /internal-server-error-simulator (needs monitoring)
-3. /slow-simulator (needs monitoring)
-4. /healthz (needs to be excluded from monitoring)
+1. /all-success-simulator  (monitoring enabled at this endpoint.)
+2. /internal-server-error-simulator (monitoring enabled at this endpoint)
+3. /slow-simulator (monitoring enabled at this endpoint)
+4. /healthz (monitoring disabled for this endpoint as /healthz endpoint is primarily used for liveness and readiness probes)
 
-A middleware for capturing metrics sits at the top of all routes.
+A middleware for capturing metrics sits at the top of all routes. Meaning it will intercept all incoming requests to the microservice.
 The middleware accepts urls which need to be excluded from monitoring.
 This is because , every application has some urls created for readiness/liveness probes which we dont intend to monitor.
 
@@ -24,4 +24,4 @@ There are 4 types of metrics.
 3. Summary
 4. Histogram  (Used to group data into buckets and primarily used for data like response time and response size)
 
-The library provided wrappers which can be used to define metrics , register them automatically to default registerer.
+The library provides wrappers which can be used to define metrics , register them automatically to default registerer.
